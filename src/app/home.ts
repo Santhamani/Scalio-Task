@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild,AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -8,7 +8,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
-import { UserService } from './user-service,';
+import { UserService } from './user-service';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 
@@ -29,15 +29,15 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 
 /** @title Input with a custom ErrorStateMatcher */
 @Component({
-  selector: 'input-error-state-matcher-example',
-  templateUrl: './input-error-state-matcher-example.html',
-  styleUrls: ['./input-error-state-matcher-example.css'],
+  selector: 'home',
+  templateUrl: './home.html',
+  styleUrls: ['./home.css'],
 })
-export class InputErrorStateMatcherExample implements OnInit {
+export class Home implements OnInit {
   myForm: FormGroup;
   myinput: any;
-  userData :PeriodicElement[] = [];
-  ELEMENT_DATA: PeriodicElement[] = []
+  userData: PeriodicElement[] = [];
+  ELEMENT_DATA: PeriodicElement[] = [];
 
   displayedColumns: string[] = ['id', 'avatar_url', 'login', 'type'];
   dataSource = new MatTableDataSource<PeriodicElement>(this.userData);
@@ -47,8 +47,7 @@ export class InputErrorStateMatcherExample implements OnInit {
   // ngAfterViewInit() {
   // }
 
-  constructor(private fb: FormBuilder, private userService: UserService) {
-  }
+  constructor(private fb: FormBuilder, private userService: UserService) {}
 
   ngOnInit() {
     this.myForm = this.fb.group({
@@ -62,10 +61,9 @@ export class InputErrorStateMatcherExample implements OnInit {
     this.myinput = form.value.email;
     this.userService.getUser(this.myinput).subscribe((res: any) => {
       this.userData = res.items;
-      this.ELEMENT_DATA = this.userData
-      this.dataSource = new MatTableDataSource<PeriodicElement>(this.userData)
-    this.dataSource.paginator = this.paginator;
-
+      this.ELEMENT_DATA = this.userData;
+      this.dataSource = new MatTableDataSource<PeriodicElement>(this.userData);
+      this.dataSource.paginator = this.paginator;
     });
     console.log(form);
   }
