@@ -1,12 +1,31 @@
 .example-form {
-  min-width: 150px;
-  max-width: 500px;
-  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 20px;
 }
 
 .example-full-width {
   width: 100%;
 }
-table{
+table {
   width: 100%;
+}
+.profile-img {
+  width: 100px;
+}
+.data-field {
+  flex-grow: 2;
+  padding: 20px;
+}
+mat-form-field {
+  background-color: none;
+}
+.form-control {
+  width: 100%;
+  background-color: none !important;
+  border: none;
+}
+.grid-table {
+  margin: 40 80;
 }

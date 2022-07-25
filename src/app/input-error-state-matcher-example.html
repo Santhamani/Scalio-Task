@@ -1,64 +1,111 @@
-<form class="example-form" [formGroup]="myForm" (ngSubmit)="onSubmit(myForm)">
-  <mat-form-field class="example-full-width" appearance="fill">
-    <mat-label>Email</mat-label>
-    <!-- <label> Email </label> -->
-    <input
-      type="email"
-      matInput
-      formControlName="email"
-      placeholder="Ex. pat@example.com"
-      [errorStateMatcher]="matcher"
-    />
-    <mat-hint>Errors appear instantly!</mat-hint>
-    <mat-error
-      *ngIf="myForm.controls['email'].invalid && (myForm.controls['email'].dirty || myForm.controls['email'].touched)"
-    >
-      Please provide a name.
-    </mat-error>
-    <mat-error *ngIf="myForm.hasError('required')">
-      Email is <strong>required</strong>
-    </mat-error>
-  </mat-form-field>
-  <button type="submit">Search</button>
-</form>
+<div class="container-fluid">
+  <nav class="navbar" style="background-color: #e3f2fd">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">
+        <img
+          src="https://scal.io/assets/images/logos/logo-black-10c4a89241.svg"
+          alt=""
+          class="d-inline-block align-text-top"
+        />
+        Scalio Task
+      </a>
+    </div>
+  </nav>
+  <div class="container-fluid">
+    <form [formGroup]="myForm" (ngSubmit)="onSubmit(myForm)">
+      <div class="row example-form">
+        <div class="col-sm-8 col-md-8 data-field">
+          <mat-form-field class="form-control" appearance="fill">
+            <mat-label>Name</mat-label>
+            <input
+              type="text"
+              matInput
+              formControlName="email"
+              placeholder="Ex. foo"
+            />
+            <mat-hint>Errors appear instantly!</mat-hint>
+            <mat-error
+              *ngIf="myForm.controls['email'].invalid && (myForm.controls['email'].dirty || myForm.controls['email'].touched)"
+            >
+              Please provide a name.
+            </mat-error>
+            <mat-error *ngIf="myForm.hasError('required')">
+              Email is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-4 col-md-4 data-field">
+          <button
+            mat-raised-button
+            color="primary"
+            type="submit"
+            [disabled]="myForm.controls['email'].invalid"
+          >
+            Search
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
 
-<div class="mat-elevation-z8">
-  <table mat-table [dataSource]="dataSource">
-    <!-- Position Column -->
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef>Id</th>
-      <td mat-cell *matCellDef="let element">{{element.id}}</td>
-    </ng-container>
+  <div class="mat-elevation-z2 grid-table m-3 p-3" *ngIf="userData.length == 0">
+    <p class="fs-4 text-center text-danger p-2">No data found??...</p>
+    <p class="fs-4 text-center text-warning m-4">
+      Please enter Name in the search box...
+    </p>
+  </div>
 
-    <!-- Name Column -->
-    <ng-container matColumnDef="avatar_url">
-      <th mat-header-cell *matHeaderCellDef>Name</th>
-      <td mat-cell *matCellDef="let element">{{element.avatar_url}}</td>
-    </ng-container>
+  <div class="container-fluid">
+    <div class="row">
+      <p class="fs-4 text-center text-secondary" *ngIf="userData.length > 1">
+        Search Results
+      </p>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="mat-elevation-z8 grid-table" *ngIf="userData">
+      <table mat-table [dataSource]="dataSource">
+        <!-- Id Column -->
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef>Id</th>
+          <td mat-cell *matCellDef="let element">{{element.id}}</td>
+        </ng-container>
 
-    <!-- Weight Column -->
-    <ng-container matColumnDef="login">
-      <th mat-header-cell *matHeaderCellDef>Login</th>
-      <td mat-cell *matCellDef="let element">{{element.login}}</td>
-    </ng-container>
+        <!-- Login Column -->
+        <ng-container matColumnDef="login">
+          <th mat-header-cell *matHeaderCellDef>Login</th>
+          <td mat-cell *matCellDef="let element">{{element.login}}</td>
+        </ng-container>
 
-    <!-- Symbol Column -->
-    <ng-container matColumnDef="type">
-      <th mat-header-cell *matHeaderCellDef>Type</th>
-      <td mat-cell *matCellDef="let element">{{element.type}}</td>
-    </ng-container>
+        <!-- Image Column -->
+        <ng-container matColumnDef="avatar_url">
+          <th mat-header-cell *matHeaderCellDef>Name</th>
+          <td mat-cell *matCellDef="let element">
+            <img
+              src="{{element.avatar_url}}"
+              alt="Profile Picture"
+              class="profile-img"
+            />
+          </td>
+        </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    <tr mat-row *ngIf="userData.length == 0"></tr>
-  </table>
+        <!-- Type Column -->
+        <ng-container matColumnDef="type">
+          <th mat-header-cell *matHeaderCellDef>Type</th>
+          <td mat-cell *matCellDef="let element">{{element.type}}</td>
+        </ng-container>
 
-  <mat-paginator
-    [pageSizeOptions]="[9, 18, 27]"
-    showFirstLastButtons
-    aria-label="Select page"
-  >
-  </mat-paginator>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <tr mat-row *ngIf="userData.length == 0"></tr>
+      </table>
+
+      <mat-paginator
+        [pageSizeOptions]="[9, 18, 27]"
+        showFirstLastButtons
+        aria-label="Select page"
+      >
+      </mat-paginator>
+    </div>
+  </div>
 </div>
-
-<div></div>

@@ -52,7 +52,7 @@ export class InputErrorStateMatcherExample implements OnInit {
 
   ngOnInit() {
     this.myForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.pattern('[a-zA-Z ]*')]],
     });
   }
 
